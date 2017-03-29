@@ -13,7 +13,8 @@
 	          {{seller.description}}/{{seller.deliveryTime}}分钟送达
 	        </div>
 	        <div v-if="seller.supports" class="support">
-	          <span class="icon" :class="classMap[seller.supports[0].type]"></span>
+	          <icon-map :icon-type="seller.supports[0].type" :icon-size="24"></icon-map>
+	          <!-- <span class="icon" :class="classMap[seller.supports[0].type]"></span> -->
 	          <span class="text">{{seller.supports[0].description}}</span>
 	        </div>
 	      </div>
@@ -26,9 +27,13 @@
 			<span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       		<i class="icon-keyboard_arrow_right"></i>
 		</div>
+		<div class="background">
+	      <img :src="seller.avatar" width="100%" height="100%">
+	    </div>
 	</div>
 </template>
 <script type="text/ecmascript-6">
+import iconMap from '../iconMap/iconMap'
 export default {
 props: {
   seller: {
@@ -39,6 +44,9 @@ data(){
   return {
   classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee']
   }
+},
+components: {
+  'icon-map': iconMap
 }
 }
 
@@ -82,24 +90,6 @@ data(){
           line-height: 12px
           font-size: 12px
         .support
-          .icon
-            display: inline-block
-            vertical-align: top
-            width: 12px
-            height: 12px
-            margin-right: 4px
-            background-size: 12px 12px
-            background-repeat: no-repeat
-            &.decrease
-              bg-image('./img/decrease_1')
-            &.discount
-              bg-image('./img/discount_1')
-            &.guarantee
-              bg-image('./img/guarantee_1')
-            &.invoice
-              bg-image('./img/invoice_1')
-            &.special
-              bg-image('./img/special_1')
           .text
             line-height: 12px
             font-size: 10px
@@ -146,5 +136,13 @@ data(){
         position: absolute
         font-size: 10px
         right: 12px
-        top: 8px              
+        top: 8px
+    .background
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      z-index: -1
+      filter: blur(10px)                  
 </style>

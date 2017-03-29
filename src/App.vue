@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-header :seller="seller"></v-header>
-    <ul>
+    <ul class="tab">
       <li><router-link to="/goods">商品</router-link></li>
       <li><router-link to="/ratings">评价</router-link></li>
       <li><router-link to="/seller">商家</router-link></li>
@@ -33,6 +33,22 @@ export default {
 
 </script>
 
-<style>
-
+<style lang="stylus" rel="stylesheet/stylus">
+@import "./common/stylus/mixin"
+.tab
+  display:flex
+  height:40px
+  width:100%
+  color:rgb(77,85,93)
+  font-size:14px
+  line-height:40px
+  border-1px(rgba(7,17,27,0.1)) 
+  background-color:#fff
+  li
+    flex:1
+    text-align:center
+    a
+      display:inline-block
+      &.active
+        color:rgb(240,20,20)
 </style>
