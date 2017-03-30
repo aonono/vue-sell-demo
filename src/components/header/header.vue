@@ -14,26 +14,27 @@
 	        </div>
 	        <div v-if="seller.supports" class="support">
 	          <icon-map :icon-type="seller.supports[0].type" :icon-size="24"></icon-map>
-	          <!-- <span class="icon" :class="classMap[seller.supports[0].type]"></span> -->
 	          <span class="text">{{seller.supports[0].description}}</span>
 	        </div>
 	      </div>
-	      <div v-if="seller.supports" class="support-count">
+	      <div v-if="seller.supports" class="support-count" @click="showDetail">
 	        <span class="count">{{seller.supports.length}}个</span>
 	        <i class="icon-keyboard_arrow_right"></i>
 	      </div>
 	    </div>
-		<div class="bulletin-wrapper">
+		<div class="bulletin-wrapper" @click="showDetail">
 			<span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       		<i class="icon-keyboard_arrow_right"></i>
 		</div>
 		<div class="background">
 	      <img :src="seller.avatar" width="100%" height="100%">
 	    </div>
+		<seller-detail-layer v-show="detailShow" :seller="seller"  @detailHide="hideDetail"></seller-detail-layer>
 	</div>
 </template>
 <script type="text/ecmascript-6">
 import iconMap from '../iconMap/iconMap'
+import sellerDetailLayer from '../sellerDetailLayer/sellerDetailLayer'
 export default {
 props: {
   seller: {
@@ -42,11 +43,20 @@ props: {
 },
 data(){
   return {
-  classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  detailShow: false
   }
 },
 components: {
-  'icon-map': iconMap
+  'icon-map': iconMap,
+  sellerDetailLayer
+},
+methods: {
+  showDetail() {
+    this.detailShow = true
+  },
+  hideDetail() {
+    this.detailShow = false
+  }
 }
 }
 

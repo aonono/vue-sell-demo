@@ -7,7 +7,6 @@
       <li><router-link to="/seller">商家</router-link></li>
     </ul>
     <router-view v-bind:seller="seller"></router-view>
-    <i class="icon-keyboard_arrow_right"></i>
   </div>
 </template>
 
