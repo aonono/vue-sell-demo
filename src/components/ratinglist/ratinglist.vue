@@ -1,5 +1,5 @@
 <template>
-<div :class="{'rating-wrapper':cssStyle===1,'rating-wrapper2':cssStyle===2}">
+<div class="rating-wrapper2">
 	<ul>
 	  <li v-for="rating in ratings" v-show="needShow(rating.rateType, rating.text)" class="rating-item">
 	    <div class="avatar">
@@ -37,13 +37,7 @@ props: {
         }
       },
 	selectType: Number,
-	onlyContent: Boolean,
-  cssStyle: {
-        type: Number,
-        default() {
-          return 1
-        }
-      }
+	onlyContent: Boolean
 },
 filters: {
       formatDate(time) {
@@ -71,7 +65,7 @@ components: {
 </script>
 <style lang="stylus"rel="stylesheet/stylus">
   @import "../../common/stylus/mixin.styl"
-.rating-wrapper
+.rating-wrapper2
   padding: 0 18px
   .rating-item
     display: flex
@@ -132,45 +126,4 @@ components: {
         font-size: 10px
         color: rgb(147, 153, 159)
 
-.rating-wrapper2
-  padding: 0 18px
-  .rating-item
-    position: relative
-    padding: 16px 0
-    border-1px(rgba(7, 17, 27, 0.1))
-    .user
-      position: absolute
-      right: 0
-      top: 16px
-      line-height: 12px
-      font-size: 0
-      .name
-        display: inline-block
-        margin-right: 6px
-        vertical-align: top
-        font-size: 10px
-        color: rgb(147, 153, 159)
-      .avatar
-        border-radius: 50%
-    .time
-      margin-bottom: 6px
-      line-height: 12px
-      font-size: 10px
-      color: rgb(147, 153, 159)
-    .text
-      line-height: 16px
-      font-size: 12px
-      color: rgb(7, 17, 27)
-      .icon-thumb_up, .icon-thumb_down
-        margin-right: 4px
-        line-height: 16px
-        font-size: 12px
-      .icon-thumb_up
-        color: rgb(0, 160, 220)
-      .icon-thumb_down
-        color: rgb(147, 153, 159)
-  .no-rating
-    padding: 16px 0
-    font-size: 12px
-    color: rgb(147, 153, 159)
 </style>

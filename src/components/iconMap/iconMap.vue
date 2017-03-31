@@ -1,5 +1,5 @@
 <template>
-	<span class="icon" :class="classType"></span>
+	<span :class="classType"></span>
 </template>
 <script type="text/ecmascript-6">
 export default {
@@ -13,8 +13,8 @@ props: {
 },
 created() {
   this.classMap = [
-  ['decrease1', 'discount1', 'special1', 'invoice1', 'guarantee1'],
-  ['decrease2', 'discount2', 'special2', 'invoice2', 'guarantee2']
+  ['icon decrease', 'icon discount', 'icon special', 'icon invoice', 'icon guarantee'],
+  ['icon2 decrease', 'icon2 discount', 'icon2 special', 'icon2 invoice', 'icon2 guarantee']
   ]
 },
 computed: {
@@ -37,26 +37,34 @@ computed: {
     width: 12px
     height: 12px
     margin-right: 4px
-    background-size: 12px 12px
     background-repeat: no-repeat
-    &.decrease1
+    background-size: 12px 12px
+    &.decrease
       bg-image('./img/decrease_1')
-    &.discount1
+    &.discount
       bg-image('./img/discount_1')
-    &.guarantee1
+    &.guarantee
       bg-image('./img/guarantee_1')
-    &.invoice1
+    &.invoice
       bg-image('./img/invoice_1')
-    &.special1
+    &.special
       bg-image('./img/special_1')
-    &.decrease2
+.icon2
+    display: inline-block
+    vertical-align: top
+    width: 16px
+    height: 16px
+    margin-right: 4px
+    background-repeat: no-repeat
+    background-size: 16px 16px
+    &.decrease
       bg-image('./img/decrease_2')
-    &.discount2
+    &.discount
       bg-image('./img/discount_2')
-    &.guarantee2
+    &.guarantee
       bg-image('./img/guarantee_2')
-    &.invoice2
+    &.invoice
       bg-image('./img/invoice_2')
-    &.special2
+    &.special
       bg-image('./img/special_2')
 </style>
