@@ -15,7 +15,7 @@
 				<li v-for="item in goods" class="food-list" ref="foodList">
 					<h1 class="title">{{item.name}}</h1>
 		            <ul>
-		              <li  v-for="food in item.foods" class="food-item border-1px">
+		              <li  v-for="food in item.foods" class="food-item border-1px" @click.stop.prev="viewfood(food)">
 		                <div class="icon">
 		                  <img width="57" height="57" :src="food.icon">
 		                </div>
@@ -30,7 +30,7 @@
 		                                                                  v-show="food.oldPrice">￥{{food.oldPrice}}</span>
 		                  </div>
 		                  <div class="cartcontrol-wrapper">
-		                    <cartcontrol :food="food"></cartcontrol>
+		                    <cartcontrol :food="food" @add="addFood"></cartcontrol>
 		                  </div>
 		                </div>
 		              </li>
@@ -39,13 +39,16 @@
 			</ul>
 		</div>
 	</div>
-	<shopcart ref="shopcart" ></shopcart>
+	<shopcart ref="shopcart" :selectedFoods="selectedFoods" :deliveryPrice="seller.deliveryPrice"
+                :minPrice="seller.minPrice"></shopcart>
+    <food @add="addFood" :food="selectedFood" ref="food"></food>
 </div>
 </template>
 <script type="text/ecmascript-6">
 import iconMap from '../iconMap/iconMap'
 import cartcontrol from '../cartcontrol/cartcontrol'
 import shopcart from '../shopcart/shopcart'
+import food from '../food/food'
 import BScroll from 'better-scroll'
 export default {
 props: {
@@ -57,13 +60,15 @@ data() {
   return {
     goods: [],
     heigthArry: [],
-    scrollY: 0
+    scrollY: 0,
+    selectedFood: {}
   }
 },
 components: {
   iconMap: iconMap,
   cartcontrol: cartcontrol,
-  shopcart
+  shopcart,
+  food
 },
 created() {
 	this.$http.get('static/data.json').then((res) => {
@@ -103,6 +108,16 @@ methods: {
     let height = this.heigthArry[index]
     this.foodsScroll.scrollTo(0, -height, 300) // 注意是负方向,做个延时
     this.scrollY = height
+  },
+  addFood(target) {
+    // 体验优化,异步执行下落动画
+    this.$nextTick(() => {
+      this.$refs.shopcart.drop(target)
+    })
+  },
+  viewfood(food) {
+  	this.selectedFood = food
+  	this.$refs.food.show()
   }
 },
 computed: {
@@ -117,6 +132,17 @@ computed: {
     }
     }
     return 0
+  },
+  selectedFoods() {
+  	let selectedFoodsArry = []
+  	this.goods.forEach(function(item, index) {
+      item.foods.forEach(function(food, j) {
+      	if (food.count) {
+          selectedFoodsArry.push(food)
+      	}
+      })
+  	})
+  	return selectedFoodsArry
   }
 }
 

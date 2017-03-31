@@ -1,12 +1,12 @@
 <template>
 	<div class="cartcontrol">
 	    <transition name="move">
-	      <div class="cart-decrease" v-show="food.count>0" @click="decreaseCount">
+	      <div class="cart-decrease" v-show="food.count>0" @click.stop.prev="decreaseCount">
 	        <span class="inner icon-remove_circle_outline"></span>
 	      </div>
 	    </transition>
 	    <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
-	    <div class="cart-add icon-add_circle" @click="addCount"></div>
+	    <div class="cart-add icon-add_circle" @click.stop.prev="addCount"></div>
 	</div>
 </template>
 <script type="text/ecmascript-6">
@@ -18,12 +18,13 @@ props: {
   }
 },
 methods: {
-  addCount: function() { // 这里count是food里原来没有的数据，需要用set
+  addCount: function(event) { // 这里count是food里原来没有的数据，需要用set
     if (!this.food.count){
       Vue.set(this.food, 'count', 1)
     } else {
       this.food.count++
     }
+    this.$emit('add', event.target)
   },
   decreaseCount: function() {
     if (this.food.count){
@@ -41,16 +42,16 @@ methods: {
       display: inline-block
       padding: 6px
       opacity: 1
-      transition: all 0.4s linear
       .inner
         display: inline-block
         line-height: 24px
         font-size: 24px
         color: rgb(0, 160, 220)
-        transition: all 0.4s linear
         transform: rotate(0)
       &.move-enter-active, &.move-leave-active
         transition: all 0.4s linear
+        .inner
+          transition: all 0.4s linear
       &.move-enter, &.move-leave-active
         opacity: 0
         transform: translate3d(24px, 0, 0)

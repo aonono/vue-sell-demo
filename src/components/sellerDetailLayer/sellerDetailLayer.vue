@@ -1,6 +1,6 @@
 <template>
 	<transition name="fade">
-      <div  class="detail">
+      <div  class="sellerdetail">
         <div class="detail-wrapper clearfix">
           <div class="detail-main">
             <h1 class="name">{{seller.name}}</h1>
@@ -56,7 +56,7 @@ components: {
 
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
-.detail
+.sellerdetail
   position: fixed
   z-index: 100
   top: 0
